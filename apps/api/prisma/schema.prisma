@@ -10,12 +10,71 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("samples") // if you want to use snake_case format
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  fullName String
+  password String
+  email String
+  profile_picture String
+  point_balance Int
+  updateAt DateTime @default(now())
+  createdAt DateTime @updatedAt
+  contact Int 
+  address String
+  role Role[]
 }
+
+enum RoleUser {
+  ADMIN
+  USER
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  role RoleUser @default(USER)
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  event_name String
+  price Int
+  dateTime DateTime
+  location String
+  description String
+  avaibleSeat Int
+  banner String
+  category String
+  promotorId Int
+  promotor Promotor @relation(fields: [promotorId], references: [id])
+  type_category Type_Category[]
+  event_category Event_Category[]
+}
+
+model Promotor {
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  descripsi String
+  contact Int
+  event Event[]
+}
+
+model Type_Category {
+  id Int @id @default(autoincrement())
+  name_category Int
+  eventId Int
+  event Event @relation(fields: [eventId],references: [id], onDelete:Cascade )
+  event_category Event_Category[]
+}
+
+model Event_Category {
+  id Int @id @default(autoincrement())
+  type_categoryId Int
+  type_category Type_Category @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
+  eventId Int
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+ 
