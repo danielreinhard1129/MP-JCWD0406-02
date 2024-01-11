@@ -42,6 +42,8 @@ model Event {
   event_name String
   price Int
   dateTime DateTime
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
   location String
   description String
   avaibleSeat Int
