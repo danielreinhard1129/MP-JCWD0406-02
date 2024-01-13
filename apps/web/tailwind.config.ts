@@ -2,7 +2,7 @@ import flowbite from "flowbite/plugin";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./src/app/**/*.{ts,tsx}", "../../node_modules/flowbite-react/lib/**/*.js"],
+  content: [ "./src/**/*.{js,ts,jsx,tsx,mdx}", "../../node_modules/flowbite-react/lib/**/*.js"],
   plugins: [flowbite],
 };
 

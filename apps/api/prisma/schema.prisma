@@ -12,30 +12,35 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-  username String @unique
+  username String @default("")
   fullName String
   password String
-  email String
-  profile_picture String
-  point_balance Int
+  email String @unique
+  profile_picture String @default("")
+  point_balance Int @default(0)
+  contact Int @default(62)
+  address String @default("")
+  referral_number String
   updateAt DateTime @default(now())
   createdAt DateTime @updatedAt
-  contact Int 
-  address String
   role Role[]
 }
 
-enum RoleUser {
-  ADMIN
-  USER
-}
+
 
 model Role {
   id Int @id @default(autoincrement())
-  role RoleUser @default(USER)
+  role String
   userId Int
   user User @relation(fields: [userId], references: [id])
 }
+
+// model Referral_Number {
+//   id Int @id @default(autoincrement())
+//   expired_date DateTime
+//   userId Int
+//   user User @relation(fields: [userId], references: [id])
+// }
 
 model Event {
   id Int @id @default(autoincrement())
