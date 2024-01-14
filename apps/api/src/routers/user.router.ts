@@ -1,4 +1,5 @@
 import { UserController } from '@/controllers/user.controller';
+import { verifyToken } from '@/middleware/jwtVerifyToken';
 import { Router } from 'express';
 
 export class UserRouter {
@@ -14,6 +15,7 @@ export class UserRouter {
   private initializeRoutes(): void {
     this.router.post('/register', this.userController.registerUser);
     this.router.post('/login', this.userController.loginUser);
+    this.router.get('/keeplogin', verifyToken, this.userController.keepLogin);
   }
 
   getRouter(): Router {

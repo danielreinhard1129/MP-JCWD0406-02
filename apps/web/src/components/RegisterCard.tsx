@@ -1,66 +1,63 @@
 /* eslint-disable @next/next/no-img-element */
 
-"use client"
-
-import axios, { AxiosError } from 'axios'
-import { useFormik } from 'formik'
-import { useRouter } from 'next/navigation'
-import { useState} from 'react'
-import * as yup from 'yup'
-import YupPassword from 'yup-password'
-YupPassword(yup)
-
+'use client';
+import axios, { AxiosError } from 'axios';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import * as yup from 'yup';
+import YupPassword from 'yup-password';
+import { toast } from 'sonner';
+import Link from 'next/link';
+YupPassword(yup);
 
 const validationSchema = yup.object().shape({
   email: yup
-        .string()
-        .email("Invalid email address")
-        .required("Username cannot be empety"),
-  fullname: yup.string().required("fullname cannot be empety"),
-  password: yup.string().required("Password cannot be empety").min(6),
-  role: yup.string().required("Selected role cannot be empety") ,
+    .string()
+    .email('Invalid email address')
+    .required('Username cannot be empety'),
+  fullname: yup.string().required('fullname cannot be empety'),
+  password: yup.string().required('Password cannot be empety').min(6),
+  role: yup.string().required('Selected role cannot be empety'),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "Password must match")
-    .required("Password cannot be empety")
-})
+    .oneOf([yup.ref('password')], 'Password must match')
+    .required('Password cannot be empety'),
+});
 
 const RegisterCard = () => {
-
-  const baseUrl = 'http://localhost:8000/api'
-  const router = useRouter()
+  const baseUrl = 'http://localhost:8000/api';
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      fullname: "",
-      password: "",
-      confirmPassword: "",
-      role: "",
-      referralCode: ""
+      email: '',
+      fullname: '',
+      password: '',
+      confirmPassword: '',
+      role: '',
+      referralCode: '',
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-
         await axios.post(baseUrl + '/users/register', {
           email: values.email,
           fullName: values.fullname,
           password: values.password,
-          role: values.role
-        })
+          role: values.role,
+        });
 
-        alert("Register success")
+        toast.success('Register success');
 
-        router.push('/login')
+        router.push('/login');
       } catch (error) {
-        if(error instanceof AxiosError){
-          const errorMsg = error.response?.data.message || error.message
-          alert(errorMsg)
+        if (error instanceof AxiosError) {
+          const errorMsg = error.response?.data.message || error.message;
+          toast.error(errorMsg);
         }
       }
-    }
-  })
+    },
+  });
 
   return (
     <div className="w-full h-screen flex items-start">
@@ -68,7 +65,9 @@ const RegisterCard = () => {
         <div className="absolute top-[40%] left-[10%] right-[10%] flex flex-col bg-black/35 py-4 text-center">
           <h1 className="text-4xl text-white font-bold"> Welcome back!</h1>
           <p className="text-xl text-white font-normal mt-2">
-            We want to ensure you have the best experience with our event. Please log in to manage your account and explore everything our event has to offer.
+            We want to ensure you have the best experience with our event.
+            Please log in to manage your account and explore everything our
+            event has to offer.
           </p>
         </div>
         <img
@@ -107,7 +106,9 @@ const RegisterCard = () => {
                   Email
                 </label>
                 {formik.errors.email && formik.touched.email && (
-                  <p className='text-sm text-red-600 mt-2'>{formik.errors.email}</p>
+                  <p className="text-sm text-red-600 mt-2">
+                    {formik.errors.email}
+                  </p>
                 )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
@@ -128,7 +129,9 @@ const RegisterCard = () => {
                   Fullname
                 </label>
                 {formik.errors.fullname && formik.touched.fullname && (
-                  <p className='text-sm text-red-600 mt-2'>{formik.errors.fullname}</p>
+                  <p className="text-sm text-red-600 mt-2">
+                    {formik.errors.fullname}
+                  </p>
                 )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
@@ -149,7 +152,9 @@ const RegisterCard = () => {
                   Password
                 </label>
                 {formik.errors.password && formik.touched.password && (
-                  <p className='text-sm text-red-500 mt-2'>{formik.errors.password}</p>
+                  <p className="text-sm text-red-500 mt-2">
+                    {formik.errors.password}
+                  </p>
                 )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
@@ -169,9 +174,12 @@ const RegisterCard = () => {
                 >
                   Confirm Password
                 </label>
-                {formik.errors.confirmPassword && formik.touched.confirmPassword && (
-                  <p className='text-sm text-red-600 mt-2'>{formik.errors.confirmPassword}</p>
-                )}
+                {formik.errors.confirmPassword &&
+                  formik.touched.confirmPassword && (
+                    <p className="text-sm text-red-600 mt-2">
+                      {formik.errors.confirmPassword}
+                    </p>
+                  )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
                 <select
@@ -186,8 +194,10 @@ const RegisterCard = () => {
                   <option value="organizer">Organizer</option>
                 </select>
                 {formik.errors.role && formik.touched.role && (
-                  <p className='text-sm text-red-600 mt-2'>{formik.errors.role}</p>
-                )} 
+                  <p className="text-sm text-red-600 mt-2">
+                    {formik.errors.role}
+                  </p>
+                )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
                 <input
@@ -208,7 +218,10 @@ const RegisterCard = () => {
                 </label>
               </div>
               <div className="w-full my-4">
-                <button type='submit' className='w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-3 text-center flex items-center justify-center cursor-pointer'>
+                <button
+                  type="submit"
+                  className="w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-3 text-center flex items-center justify-center cursor-pointer"
+                >
                   Create Account
                 </button>
               </div>
@@ -218,9 +231,11 @@ const RegisterCard = () => {
         <div className="w-full flex items-center justify-center mt-1">
           <p className="text-sm font-normal text-[#060606]">
             have a account?{' '}
-            <span className="font-semibold underline underline-offset-2 cursor-pointer">
-              Sign In for join
-            </span>
+            <Link href="/login">
+              <span className="font-semibold underline underline-offset-2 cursor-pointer">
+                Sign In for join
+              </span>
+            </Link>
           </p>
         </div>
       </div>
