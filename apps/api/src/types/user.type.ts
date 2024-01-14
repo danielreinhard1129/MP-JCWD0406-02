@@ -10,10 +10,6 @@ export interface Iuser {
   createdAt: Date;
   contact: number;
   address: string;
-  role: string
+  role: string;
 }
 
-export interface IuserRole {
-  userId: number;
-  role: string
-}

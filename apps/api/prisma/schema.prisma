@@ -27,7 +27,6 @@ model User {
 }
 
 
-
 model Role {
   id Int @id @default(autoincrement())
   role String
@@ -35,12 +34,6 @@ model Role {
   user User @relation(fields: [userId], references: [id])
 }
 
-// model Referral_Number {
-//   id Int @id @default(autoincrement())
-//   expired_date DateTime
-//   userId Int
-//   user User @relation(fields: [userId], references: [id])
-// }
 
 model Event {
   id Int @id @default(autoincrement())
