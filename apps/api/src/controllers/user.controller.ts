@@ -36,8 +36,6 @@ export class UserController {
 
   async forgotPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("1111");
-      
       const result = await forgotPasswordAction(req.body.email);
       return res.status(result.status).send(result);
     } catch (error) {

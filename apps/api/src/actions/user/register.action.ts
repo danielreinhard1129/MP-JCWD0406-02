@@ -7,9 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const registerAction = async (data: IUser) => {
   try {
     const generateReferralNumber: string = uuidv4();
-
-    console.log(data)
-
     const user = await getUserByEmail(data.email);
 
     if (user) {

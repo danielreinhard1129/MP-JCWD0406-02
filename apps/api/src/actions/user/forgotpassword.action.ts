@@ -6,19 +6,11 @@ export const forgotPasswordAction = async (email: string) => {
   try {
     const user = await getUserByEmail(email);
 
-
     if(!user) throw new Error('Account not found')
-
-    // if (!user) {
-    //   return {
-    //     message: 'Account not found',
-    //     status: 400,
-    //   };
-    // }
 
     const token = createToken({ email: user.email });
 
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = process.env.BASE_URL
     const link = baseUrl + `/reset-password?token=${token}`;
 
     await transporter.sendMail({
