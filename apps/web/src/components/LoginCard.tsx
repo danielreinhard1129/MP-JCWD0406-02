@@ -42,7 +42,7 @@ const LoginCard = () => {
 
         localStorage.setItem('token_auth', data.token);
 
-        toast.success('login success');
+        toast.success('Login success');
 
         router.push('/');
       } catch (error) {
