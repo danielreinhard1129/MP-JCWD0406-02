@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+
 import { loginAction, logoutAction } from '@/lib/features/userSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import axios from 'axios';
