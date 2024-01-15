@@ -23,15 +23,15 @@ model User {
   referral_number String
   updateAt DateTime @default(now())
   createdAt DateTime @updatedAt
-  role Role[]
+  roleId Int
+  role Role @relation(fields: [roleId], references: [id])
 }
 
 
 model Role {
   id Int @id @default(autoincrement())
   role String
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  user User[]
 }
 
 
@@ -49,8 +49,8 @@ model Event {
   category String
   promotorId Int
   promotor Promotor @relation(fields: [promotorId], references: [id])
-  type_category Type_Category[]
-  event_category Event_Category[]
+  type_category TypeCategory[]
+  event_category EventCategory[]
 }
 
 model Promotor {
@@ -62,18 +62,18 @@ model Promotor {
   event Event[]
 }
 
-model Type_Category {
+model TypeCategory {
   id Int @id @default(autoincrement())
   name_category Int
   eventId Int
   event Event @relation(fields: [eventId],references: [id], onDelete:Cascade )
-  event_category Event_Category[]
+  event_category EventCategory[]
 }
 
-model Event_Category {
+model EventCategory {
   id Int @id @default(autoincrement())
   type_categoryId Int
-  type_category Type_Category @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
+  type_category TypeCategory @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
   eventId Int
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }

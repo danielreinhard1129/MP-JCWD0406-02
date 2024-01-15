@@ -49,6 +49,7 @@ const LoginCard = () => {
         if (error instanceof AxiosError) {
           const errorMsg = error.response?.data.message || error.message;
           toast.error(errorMsg);
+          console.log(error)
         }
       }
     },
@@ -130,9 +131,11 @@ const LoginCard = () => {
                 )}
               </div>
               <div className="w-full flex items-center justify-end">
-                <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
-                  Forgot Password ?
-                </p>
+                <Link href="/forgot-password">
+                  <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
+                    Forgot Password ?
+                  </p>
+                </Link>
               </div>
               <div className="w-full flex flex-col my-4">
                 <button
