@@ -6,15 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const registerAction = async (data: IUser) => {
   try {
-    const generateReferralNumber: string = uuidv4();
+    const generateReferralNumber: string = uuidv4().substring(0, 8);
+
     const user = await getUserByEmail(data.email);
 
-    if (user) {
-      return {
-        status: 400,
-        message: 'Email already exist',
-      };
-    }
+    if (user) throw new Error('Email already exist');
 
     const hashedPassword = await hashPassword(data.password);
     data.password = hashedPassword;

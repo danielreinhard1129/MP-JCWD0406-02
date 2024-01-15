@@ -10,25 +10,18 @@ export const loginAction = async (data: IUser) => {
 
     const user = await getUserByEmail(email);
 
-    if (!user) {
-      return {
-        message: 'Account not found',
-        status: 400,
-      };
-    }
+    if (!user) throw new Error('Account not found');
 
-    const isPasswordValid = await comparePasswords(password, user.password);
+    const isPasswordValid = await comparePasswords(
+      password,
+      user?.password as string,
+    );
 
-    if (!isPasswordValid) {
-      return {
-        message: 'Invalid password',
-        status: 400,
-      };
-    }
+    if (!isPasswordValid) throw new Error('Invalid password');
 
     const datawithoutPassword = excludeFields(user, ['password']);
 
-    const token = createToken({ email: user.email });
+    const token = createToken({ email: user?.email });
 
     return {
       message: 'Login Success',

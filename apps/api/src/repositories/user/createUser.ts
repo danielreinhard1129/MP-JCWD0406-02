@@ -11,9 +11,10 @@ export const createUser = async (
       data: {
         email,
         fullName,
+        username: fullName,
         password,
         referral_number: generateReferralNumber,
-        roleId
+        roleId,
       },
     });
     return result;
