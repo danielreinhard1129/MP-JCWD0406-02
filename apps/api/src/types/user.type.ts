@@ -10,6 +10,4 @@ export interface Iuser {
   createdAt: Date;
   contact: number;
   address: string;
-  role: string;
 }
-
