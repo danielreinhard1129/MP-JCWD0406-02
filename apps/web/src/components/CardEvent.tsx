@@ -7,7 +7,7 @@ export const CardEvent = () => {
     <>
       <Card
         className="max-w-xs w-68 shadow-xl rounded-2xl"
-        imgAlt="Pantat Bohay"
+        imgAlt="Foto Event"
         imgSrc="https://images.pexels.com/photos/433452/pexels-photo-433452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       >
         <div className="">
