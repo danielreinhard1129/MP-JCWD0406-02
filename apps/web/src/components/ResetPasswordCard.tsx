@@ -48,7 +48,7 @@ const ResetPasswordCard = () => {
         router.push('/login');
       } catch (error) {
         if (error instanceof AxiosError) {
-          const errorMsg = error.response?.data.message || error.message;
+          const errorMsg = error.response?.data || error.message;
           toast.error(errorMsg);
         }
       }

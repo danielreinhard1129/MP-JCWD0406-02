@@ -40,28 +40,27 @@ const RegisterCard = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        let roleId;
 
-        let roleId
-
-        if(values.role == "customer"){
-          roleId = 1
+        if (values.role == 'customer') {
+          roleId = 1;
         } else {
-          roleId = 2
+          roleId = 2;
         }
 
         await axios.post(baseUrl + '/users/register', {
           email: values.email,
           fullName: values.fullname,
           password: values.password,
-          roleId: roleId
+          roleId: roleId,
         });
 
         toast.success('Register success');
 
-        router.push('/login')
+        router.push('/login');
       } catch (error) {
         if (error instanceof AxiosError) {
-          const errorMsg = error.response?.data.message || error.message;
+          const errorMsg = error.response?.data || error.message;
           toast.error(errorMsg);
         }
       }

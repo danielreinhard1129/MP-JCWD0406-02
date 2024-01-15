@@ -1,11 +1,11 @@
-import RegisterCard from '@/components/RegisterCard'
+import RegisterCard from '@/components/RegisterCard';
 
 const Register = () => {
   return (
     <div>
-        <RegisterCard/>
+      <RegisterCard />
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

@@ -11,7 +11,7 @@ export class UserController {
       const result = await registerAction(req.body);
       return res.status(result.status).send(result);
     } catch (error) {
-      next(Error);
+      next(error);
     }
   }
 
@@ -20,7 +20,7 @@ export class UserController {
       const result = await loginAction(req.body);
       return res.status(result.status).send(result);
     } catch (error) {
-      next(Error);
+      next(error);
     }
   }
 

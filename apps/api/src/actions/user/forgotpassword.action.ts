@@ -10,7 +10,7 @@ export const forgotPasswordAction = async (email: string) => {
 
     const token = createToken({ email: user.email });
 
-    const baseUrl = process.env.BASE_URL
+    const baseUrl = "http://localhost:3000"
     const link = baseUrl + `/reset-password?token=${token}`;
 
     await transporter.sendMail({

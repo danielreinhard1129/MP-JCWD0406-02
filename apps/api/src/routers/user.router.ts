@@ -16,8 +16,12 @@ export class UserRouter {
     this.router.post('/register', this.userController.registerUser);
     this.router.post('/login', this.userController.loginUser);
     this.router.get('/keeplogin', verifyToken, this.userController.keepLogin);
-    this.router.post('/forgot-password', this.userController.forgotPassword)
-    this.router.patch('/reset-password', verifyToken, this.userController.resetPassword)
+    this.router.post('/forgot-password', this.userController.forgotPassword);
+    this.router.patch(
+      '/reset-password',
+      verifyToken,
+      this.userController.resetPassword,
+    );
   }
 
   getRouter(): Router {

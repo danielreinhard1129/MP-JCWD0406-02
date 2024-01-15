@@ -10,5 +10,5 @@ export interface IUser {
   createdAt: Date;
   contact: number;
   address: string;
-  roleId: number
+  roleId: number;
 }
