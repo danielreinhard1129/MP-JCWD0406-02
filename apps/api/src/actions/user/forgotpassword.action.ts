@@ -6,12 +6,15 @@ export const forgotPasswordAction = async (email: string) => {
   try {
     const user = await getUserByEmail(email);
 
-    if (!user) {
-      return {
-        message: 'Account not found',
-        status: 400,
-      };
-    }
+
+    if(!user) throw new Error('Account not found')
+
+    // if (!user) {
+    //   return {
+    //     message: 'Account not found',
+    //     status: 400,
+    //   };
+    // }
 
     const token = createToken({ email: user.email });
 

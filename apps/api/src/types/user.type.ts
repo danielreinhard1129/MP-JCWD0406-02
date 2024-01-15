@@ -1,4 +1,4 @@
-export interface Iuser {
+export interface IUser {
   id: number;
   username: string;
   fullName: string;
@@ -10,4 +10,5 @@ export interface Iuser {
   createdAt: Date;
   contact: number;
   address: string;
+  roleId: number
 }

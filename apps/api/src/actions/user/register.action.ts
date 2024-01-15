@@ -1,12 +1,14 @@
 import { hashPassword } from '@/lib/bcrypt';
 import { createUser } from '@/repositories/user/createUser';
 import { getUserByEmail } from '@/repositories/user/getUserByEmail';
-import { Iuser } from '@/types/user.type';
+import { IUser } from '@/types/user.type';
 import { v4 as uuidv4 } from 'uuid';
 
-export const registerAction = async (data: Iuser) => {
+export const registerAction = async (data: IUser) => {
   try {
     const generateReferralNumber: string = uuidv4();
+
+    console.log(data)
 
     const user = await getUserByEmail(data.email);
 

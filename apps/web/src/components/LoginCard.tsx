@@ -49,6 +49,7 @@ const LoginCard = () => {
         if (error instanceof AxiosError) {
           const errorMsg = error.response?.data.message || error.message;
           toast.error(errorMsg);
+          console.log(error)
         }
       }
     },

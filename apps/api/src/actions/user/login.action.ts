@@ -2,9 +2,9 @@ import { excludeFields } from '@/helpers/excludeFields';
 import { comparePasswords } from '@/lib/bcrypt';
 import { createToken } from '@/lib/jwt';
 import { getUserByEmail } from '@/repositories/user/getUserByEmail';
-import { Iuser } from '@/types/user.type';
+import { IUser } from '@/types/user.type';
 
-export const loginAction = async (data: Iuser) => {
+export const loginAction = async (data: IUser) => {
   try {
     const { email, password } = data;
 
