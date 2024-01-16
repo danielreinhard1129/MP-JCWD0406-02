@@ -5,6 +5,7 @@ const secretKey = process.env.JWT_SECRET_KEY!;
 
 interface PayloadToken {
   email: string;
+  roleId: Number;
 }
 
 export const verifyToken = (
