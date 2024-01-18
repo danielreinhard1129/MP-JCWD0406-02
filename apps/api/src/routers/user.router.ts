@@ -22,6 +22,11 @@ export class UserRouter {
       verifyToken,
       this.userController.resetPassword,
     );
+    this.router.post(
+      '/claim-referralCode',
+      this.userController.claimReferralCode,
+    );
+    this.router.get(`/profile-user/:id`, this.userController.ProfileUser);
   }
 
   getRouter(): Router {

@@ -5,10 +5,10 @@ export interface IUser {
   password: string;
   email: string;
   profile_picture: string;
-  point_balance: number;
   updateAt: Date;
   createdAt: Date;
   contact: number;
   address: string;
   roleId: number;
+  referral_number: string;
 }
