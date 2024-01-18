@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import YupPassword from 'yup-password';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { useState } from 'react';
 YupPassword(yup);
 
 const validationSchema = yup.object().shape({
@@ -25,6 +26,8 @@ const validationSchema = yup.object().shape({
 });
 
 const RegisterCard = () => {
+  const [inputReferral, setInputReferral] = useState('');
+  const [success, setSuccess] = useState(false);
   const baseUrl = 'http://localhost:8000/api';
   const router = useRouter();
 
@@ -53,12 +56,14 @@ const RegisterCard = () => {
           fullName: values.fullname,
           password: values.password,
           roleId: roleId,
+          referralCode: inputReferral,
         });
 
         toast.success('Register success');
 
         router.push('/login');
       } catch (error) {
+        console.log('hehehehe', error);
         if (error instanceof AxiosError) {
           const errorMsg = error.response?.data || error.message;
           toast.error(errorMsg);
@@ -66,6 +71,21 @@ const RegisterCard = () => {
       }
     },
   });
+
+  const handleReferralCode = async () => {
+    try {
+      await axios.post(baseUrl + '/users/claim-referralCode', {
+        referralCode: inputReferral,
+      });
+      toast.success('Claim referral code success');
+      setSuccess(true);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
 
   return (
     <div className="w-full h-screen flex items-start">
@@ -208,22 +228,33 @@ const RegisterCard = () => {
                 )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
-                <input
-                  type="text"
-                  name="referralCode"
-                  id="referralCode"
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.referralCode}
-                />
-                <label
-                  htmlFor="referralCode"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Referral Code
-                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="referralCode"
+                    id="referralCode"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
+                    onChange={(e) => setInputReferral(e.target.value)}
+                    value={inputReferral}
+                    disabled={success}
+                  />
+                  <label
+                    htmlFor="referralCode"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >
+                    Referral Code
+                  </label>
+                  <input
+                    type="button"
+                    disabled={success}
+                    onClick={handleReferralCode}
+                    value="claim"
+                    className={`text-white absolute end-2.5 bottom-2.5 ${
+                      success ? 'bg-gray-500' : 'bg-gray-800'
+                    } hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700`}
+                  />
+                </div>
               </div>
               <div className="w-full my-4">
                 <button

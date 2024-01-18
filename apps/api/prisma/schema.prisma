@@ -11,70 +11,119 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @default("")
-  fullName String
-  password String
-  email String @unique
-  profile_picture String @default("")
-  point_balance Int @default(0)
-  contact Int @default(62)
-  address String @default("")
-  referral_number String
-  updateAt DateTime @default(now())
-  createdAt DateTime @updatedAt
-  roleId Int
-  role Role @relation(fields: [roleId], references: [id])
+  id              Int            @id @default(autoincrement())
+  username        String         @default("")
+  fullName        String
+  password        String
+  email           String         @unique
+  profile_picture String?
+  contact         Int?
+  address         String?
+  referral_number String         @unique
+  updateAt        DateTime       @default(now())
+  createdAt       DateTime       @updatedAt
+  roleId          Int
+  role            Role           @relation(fields: [roleId], references: [id])
+  point_balance   PointBalance[]
+  userReward      UserReward[]
+  userVoucher     UserVoucher[]
 }
 
-
 model Role {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   role String
   user User[]
 }
 
+model PointBalance {
+  id            Int      @id @default(autoincrement())
+  point_balance Int      @default(0)
+  userId        Int
+  expiresAt     DateTime
+  createAt      DateTime @default(now())
+  updateAt      DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+model UserReward {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  rewardId  Int
+  expiresAt DateTime
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reward    Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+}
+
+model Reward {
+  id         Int          @id @default(autoincrement())
+  nameReward String
+  persentase Int
+  createAt   DateTime     @default(now())
+  updateAt   DateTime     @updatedAt
+  userReward UserReward[]
+}
+
+model UserVoucher {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  voucherId Int
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  voucher   Voucher  @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+}
+
+model Voucher {
+  id          Int           @id @default(autoincrement())
+  nameVoucher String
+  persentase  Int
+  expiresAt   DateTime
+  createAt    DateTime      @default(now())
+  updateAt    DateTime      @updatedAt
+  userVoucher UserVoucher[]
+}
 
 model Event {
-  id Int @id @default(autoincrement())
-  event_name String
-  price Int
-  dateTime DateTime
-  createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  location String
-  description String
-  avaibleSeat Int
-  banner String
-  category String
-  promotorId Int
-  promotor Promotor @relation(fields: [promotorId], references: [id])
-  type_category TypeCategory[]
+  id             Int             @id @default(autoincrement())
+  event_name     String
+  price          Int
+  dateTime       DateTime
+  createdAt      DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  location       String
+  description    String
+  avaibleSeat    Int
+  banner         String
+  category       String
+  promotorId     Int
+  promotor       Promotor        @relation(fields: [promotorId], references: [id])
+  type_category  TypeCategory[]
   event_category EventCategory[]
 }
 
 model Promotor {
-  id Int @id @default(autoincrement())
-  name String
-  email String
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String
   descripsi String
-  contact Int
-  event Event[]
+  contact   Int
+  event     Event[]
 }
 
 model TypeCategory {
-  id Int @id @default(autoincrement())
-  name_category Int
-  eventId Int
-  event Event @relation(fields: [eventId],references: [id], onDelete:Cascade )
+  id             Int             @id @default(autoincrement())
+  name_category  Int
+  eventId        Int
+  event          Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
   event_category EventCategory[]
 }
 
 model EventCategory {
-  id Int @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   type_categoryId Int
-  type_category TypeCategory @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
-  eventId Int
-  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  type_category   TypeCategory @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
+  eventId         Int
+  event           Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
- 
