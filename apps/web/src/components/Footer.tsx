@@ -10,7 +10,7 @@ import {
 export const FooterComp = () => {
   return (
     <Footer container>
-      <div className="w-full max-w-7xl mx-auto text-center">
+      <div className="w-full max-w-7xl mx-auto text-center mt-10">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <FooterBrand
             href="https://flowbite.com"
