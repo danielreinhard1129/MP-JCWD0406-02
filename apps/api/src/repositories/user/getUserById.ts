@@ -18,6 +18,9 @@ export const getUserById = async (userId: number) => {
           },
         },
         userVoucher: {
+          where: {
+            isUse: false,
+          },
           include: {
             voucher: true,
           },

@@ -27,6 +27,7 @@ export class UserRouter {
       this.userController.claimReferralCode,
     );
     this.router.get(`/profile-user/:id`, this.userController.ProfileUser);
+    this.router.post('/claim-reward', this.userController.claimReward);
   }
 
   getRouter(): Router {

@@ -24,7 +24,12 @@ export default function RootLayout({
         <StoreProvider>
           <Navbar />
           {children}
-          <Toaster duration={1500} expand={false} richColors position='top-right'/>
+          <Toaster
+            duration={1500}
+            expand={false}
+            richColors
+            position="top-right"
+          />
           <FooterComp />
         </StoreProvider>
       </body>
