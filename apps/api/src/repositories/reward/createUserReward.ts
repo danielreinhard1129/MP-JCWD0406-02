@@ -5,12 +5,16 @@ export const createUserReward = async (
   rewardId: number,
   expiredDate: Date,
 ) => {
-  const result = await prisma.userReward.create({
-    data: {
-      userId: userId,
-      rewardId,
-      expiresAt: expiredDate,
-    },
-  });
-  return result;
+  try {
+    const result = await prisma.userReward.create({
+      data: {
+        userId: userId,
+        rewardId,
+        expiresAt: expiredDate,
+      },
+    });
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };

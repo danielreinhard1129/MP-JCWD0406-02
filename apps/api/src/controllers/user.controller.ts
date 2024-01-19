@@ -6,6 +6,7 @@ import { forgotPasswordAction } from '@/actions/user/forgotpassword.action';
 import { resetPasswordAction } from '@/actions/user/resetpassword.action';
 import { claimReferralCodeAction } from '@/actions/referral/claimReferralCode.action';
 import { profileUserAction } from '@/actions/user/profileuser.action';
+import { claimRewardAction } from '@/actions/claimReward/claimRewardAction';
 
 export class UserController {
   async registerUser(req: Request, res: Response, next: NextFunction) {
@@ -70,6 +71,15 @@ export class UserController {
     try {
       const referralCode = req.body.referralCode;
       const result = await claimReferralCodeAction(referralCode);
+      return res.status(result.status).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async claimReward(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await claimRewardAction(req.body);
       return res.status(result.status).send(result);
     } catch (error) {
       next(error);
