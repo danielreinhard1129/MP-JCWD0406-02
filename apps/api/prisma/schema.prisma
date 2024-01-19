@@ -12,7 +12,6 @@ datasource db {
 
 model User {
   id              Int            @id @default(autoincrement())
-  username        String         @default("")
   fullName        String
   password        String
   email           String         @unique
@@ -27,6 +26,7 @@ model User {
   point_balance   PointBalance[]
   userReward      UserReward[]
   userVoucher     UserVoucher[]
+  event           Event[]
 }
 
 model Role {
@@ -98,33 +98,23 @@ model Event {
   avaibleSeat    Int
   banner         String
   category       String
-  promotorId     Int
-  promotor       Promotor        @relation(fields: [promotorId], references: [id])
-  type_category  TypeCategory[]
+  userId         Int
+  user           User            @relation(fields: [userId], references: [id])
+  ticket_type    TypeTicket[]
   event_category EventCategory[]
 }
 
-model Promotor {
-  id        Int     @id @default(autoincrement())
-  name      String
-  email     String
-  descripsi String
-  contact   Int
-  event     Event[]
-}
-
-model TypeCategory {
-  id             Int             @id @default(autoincrement())
-  name_category  Int
-  eventId        Int
-  event          Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  event_category EventCategory[]
+model TypeTicket {
+  id         Int    @id @default(autoincrement())
+  ticketName String
+  price      Int
+  eventId    Int
+  event      Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
 model EventCategory {
-  id              Int          @id @default(autoincrement())
+  id              Int   @id @default(autoincrement())
   type_categoryId Int
-  type_category   TypeCategory @relation(fields: [type_categoryId], references: [id], onDelete: Cascade)
   eventId         Int
-  event           Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  event           Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
