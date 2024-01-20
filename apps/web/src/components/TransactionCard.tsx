@@ -1,21 +1,196 @@
 'use client';
-
 import {
+  Accordion,
   Button,
   Card,
-  Label,
   Modal,
   ModalBody,
   ModalHeader,
   Select,
 } from 'flowbite-react';
-import { TicketCategory } from './TicketCategory';
-import { Transaction } from './Transaction';
-import { useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { toast } from 'sonner';
 
-const TransactionCard = () => {
+interface Reward {
+  id: number;
+  nameReward: string;
+  persentase: number;
+  createAt: Date;
+  updateAt: Date;
+}
+
+interface UserReward {
+  id: number;
+  userId: number;
+  rewardId: number;
+  expiresAt: Date;
+  createAt: Date;
+  updateAt: Date;
+  reward: Reward;
+}
+
+interface Voucher {
+  id: number;
+  nameVoucher: string;
+  persentase: number;
+  createAt: Date;
+  updateAt: Date;
+}
+
+interface UserVoucher {
+  id: number;
+  userId: number;
+  voucherId: number;
+  createAt: Date;
+  updateAt: Date;
+  voucher: Voucher;
+}
+
+interface Point_balance {
+  id: number;
+  point_balance: number;
+  userId: number;
+  expiresAt: Date;
+  createAt: Date;
+  updateAt: Date;
+}
+
+interface UserData {
+  id: number;
+  username: string;
+  fullName: string;
+  email: string;
+  profile_picture: string;
+  contact: string;
+  address: string;
+  point: string;
+  referral_number: string;
+  createAt: Date;
+  updateAt: Date;
+  roleId: number;
+  userReward: UserReward[];
+  point_balance: Point_balance[];
+  userVoucher: UserVoucher[];
+}
+
+const Transaction = () => {
   const [openModal, setOpenModal] = useState(false);
+  const router = useRouter();
+
+  const baseUrl = 'http://localhost:8000/api';
+  const { id } = useParams();
+  const [userData, setUserData] = useState<UserData>();
+  const [isvoucher, setIsVoucher] = useState(false);
+  const [ispoint, setIsPoint] = useState(false);
+  const [isreward, setIsReward] = useState(false);
+
+  const [voucher, setVoucher] = useState(0);
+  const [point, setPoint] = useState(0);
+  const [reward, setReward] = useState(0);
+  const [payment, setPayment] = useState(0);
+
+  const [userVoucherId, setUserVoucherId] = useState(0);
+  const [userRewardId, setUserRewardId] = useState(0);
+
+  let totalPoint: any;
+
+  useEffect(() => {
+    const calculatedTotalVoucher = (voucher * 1500000) / 100;
+    const calculatedTotalReward = (reward * 1500000) / 100;
+    const calculatedPayment =
+      1500000 - calculatedTotalVoucher - point - calculatedTotalReward;
+    setPayment(calculatedPayment);
+  }, [voucher, point, reward]);
+
+  const getDataUser = async () => {
+    try {
+      const { data } = await axios.get(baseUrl + `/users/profile-user/${15}`);
+      setUserData(data.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getDataUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  totalPoint = userData?.point_balance.reduce((acc, curr) => {
+    return (acc += curr.point_balance);
+  }, 0);
+
+  const handleVoucher = async (
+    persentase: number,
+    voucherId: number,
+    nameVoucher: string,
+  ) => {
+    try {
+      setIsVoucher(true);
+      setUserVoucherId(voucherId);
+      setVoucher(persentase);
+      toast.success(`add ${nameVoucher} success`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
+
+  const handlePoint = async () => {
+    try {
+      setIsPoint(true);
+      setPoint(totalPoint);
+      toast.success(`add balance success`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
+
+  const handleReward = async (
+    rewardId: number,
+    persentase: number,
+    nameReward: string,
+  ) => {
+    try {
+      setIsReward(true);
+      setUserRewardId(rewardId);
+      setReward(persentase);
+      toast.success(`add ${nameReward} success`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await axios.post(baseUrl + '/users/claim-reward', {
+        userVoucherId,
+        userRewardId,
+        pointByUserId: userData?.id,
+      });
+      toast.success(`transaction success`);
+      router.push('/payment');
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data || error.message;
+        toast.error(errorMsg);
+      }
+    }
+  };
 
   return (
     <>
@@ -46,28 +221,80 @@ const TransactionCard = () => {
                 <h1 className="font-normal text-md">3</h1>
               </div>
             </div>
-
-            <Card className="px-2 rounded-3xl">
-              <div className="flex justify-between">
-                <h1 className="font-normal text-lg">Voucher</h1>
-                <h1 className="font-semibold text-lg  text-red-600">10%</h1>
-              </div>
-            </Card>
-            <Card className="px-2 rounded-3xl">
-              <div className="flex justify-between">
-                <h1 className="font-normal text-lg">Discount</h1>
-                <h1 className="font-semibold text-lg text-red-600">
-                  Rp. 10.000
-                </h1>
-              </div>
-            </Card>
-
-            <Card className="px-2 rounded-3xl">
-              <div className="flex justify-between">
-                <h1 className="font-normal text-lg">Point</h1>
-                <h1 className="font-semibold text-xl">20.000</h1>
-              </div>
-            </Card>
+            <Accordion>
+              <Accordion.Panel>
+                <Accordion.Title>Voucher</Accordion.Title>
+                <Accordion.Content>
+                  {userData?.userVoucher.map((item, index) => (
+                    <div key={index}>
+                      <div className="flex justify-between items-center mt-2">
+                        <p>{item.voucher.nameVoucher}</p>
+                        <input
+                          type="button"
+                          value="Claim"
+                          onClick={() =>
+                            handleVoucher(
+                              item.voucher.persentase,
+                              item.voucherId,
+                              item.voucher.nameVoucher,
+                            )
+                          }
+                          className={`text-white ${
+                            isvoucher ? 'bg-gray-500' : 'bg-gray-800'
+                          } hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </Accordion.Content>
+              </Accordion.Panel>
+              <Accordion.Panel>
+                <Accordion.Title>Point Balance</Accordion.Title>
+                <Accordion.Content>
+                  <div className="flex justify-between items-center mt-2">
+                    <p>
+                      Point balance :{' '}
+                      {new Intl.NumberFormat('id-ID', {}).format(totalPoint)}
+                    </p>
+                    <input
+                      type="button"
+                      onClick={handlePoint}
+                      value="Use"
+                      className={`text-white ${
+                        ispoint ? 'bg-gray-500' : 'bg-gray-800'
+                      } hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700`}
+                    />
+                  </div>
+                </Accordion.Content>
+              </Accordion.Panel>
+              <Accordion.Panel>
+                <Accordion.Title>Reward</Accordion.Title>
+                <Accordion.Content>
+                  {userData?.userReward.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex justify-between items-center mt-2"
+                    >
+                      <p>{item.reward.nameReward}</p>
+                      <input
+                        type="button"
+                        onClick={() =>
+                          handleReward(
+                            item.reward.id,
+                            item.reward.persentase,
+                            item.reward.nameReward,
+                          )
+                        }
+                        value="Claim"
+                        className={`text-white ${
+                          isreward ? 'bg-gray-500' : 'bg-gray-800'
+                        } hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700`}
+                      />
+                    </div>
+                  ))}
+                </Accordion.Content>
+              </Accordion.Panel>
+            </Accordion>
           </Card>
         </div>
         <div>
@@ -87,7 +314,6 @@ const TransactionCard = () => {
               </h1>
             </div>
           </Card>
-
           <Card className="px-2 rounded-3xl mt-4">
             <h1 className="font-bold text-lg">Payment Detail</h1>
             <hr />
@@ -98,16 +324,34 @@ const TransactionCard = () => {
               </div>
               <div className="flex justify-between">
                 <h1 className="font-medium text-md">Voucher</h1>
-                <h1 className="font-semibold text-md">-200.000</h1>
+                <h1 className="font-semibold text-md">
+                  -
+                  {new Intl.NumberFormat('id-ID', {}).format(
+                    (voucher * 1500000) / 100,
+                  )}
+                </h1>
               </div>
               <div className="flex justify-between">
                 <h1 className="font-medium text-md">Point</h1>
-                <h1 className="font-semibold text-md">-50.000</h1>
+                <h1 className="font-semibold text-md">
+                  -{new Intl.NumberFormat('id-ID', {}).format(point)}
+                </h1>
+              </div>
+              <div className="flex justify-between">
+                <h1 className="font-medium text-md">Reward</h1>
+                <h1 className="font-semibold text-md">
+                  -
+                  {new Intl.NumberFormat('id-ID', {}).format(
+                    (reward * 1500000) / 100,
+                  )}
+                </h1>
               </div>
             </div>
             <div className="flex justify-between">
               <h1 className="font-bold text-xl">Total Payment</h1>
-              <h1 className="font-bold text-xl text-red-600">Rp1.250.000</h1>
+              <h1 className="font-bold text-xl text-red-600">
+                {new Intl.NumberFormat('id-ID', {}).format(payment)}
+              </h1>
             </div>
           </Card>
           <div className="flex justify-around mt-6 gap-3">
@@ -143,7 +387,11 @@ const TransactionCard = () => {
                 </div>
               </ModalBody>
             </Modal>
-            <Button size="lg" className="w-[200px] rounded-2xl">
+            <Button
+              size="lg"
+              className="w-[200px] rounded-2xl"
+              onClick={handleSubmit}
+            >
               Checkout
             </Button>
           </div>
@@ -153,4 +401,4 @@ const TransactionCard = () => {
   );
 };
 
-export default TransactionCard;
+export default Transaction;
