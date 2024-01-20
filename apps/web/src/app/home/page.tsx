@@ -1,7 +1,7 @@
-import { CardEvent } from '@/components/CardEvent';
-import { Category } from '@/components/Category';
-import { EventCarousel } from '@/components/EventCarousel';
-import { Jumbotron } from '@/components/Jumbotron';
+import { CardEvent } from '@/app/home/components/CardEvent';
+import { Category } from '@/app/home/components/Category';
+import { EventCarousel } from '@/app/home/components/EventCarousel';
+import { Jumbotron } from '@/app/home/components/Jumbotron';
 import { SearchBar } from '@/components/SearchBar';
 
 const HomePage = () => {

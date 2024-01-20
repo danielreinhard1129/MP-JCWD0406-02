@@ -1,4 +1,3 @@
-import CreateEvent from '@/components/CreateEvent';
 import EventDetail from './event-detail/page';
 
 import HomePage from './home/page';
