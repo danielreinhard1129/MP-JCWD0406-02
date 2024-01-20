@@ -1,7 +1,7 @@
 import { Button, Card, Kbd } from 'flowbite-react';
 import { TicketCategory } from './TicketCategory';
-import { Voucher } from './Voucher';
-import { Transaction } from './Transaction';
+import { Voucher } from '../../../components/Voucher';
+import { Transaction } from '../../../components/Transaction';
 
 export const LayoutCardCart = () => {
   return (

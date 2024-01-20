@@ -1,10 +1,10 @@
-import { LayoutCardCart } from '@/components/LayoutCardCart';
-import { CardEvent } from '@/components/CardEvent';
-import { Category } from '@/components/Category';
-import { EventCarousel } from '@/components/EventCarousel';
-import { EventDescription } from '@/components/EventDescription';
-import { EventDetailHeader } from '@/components/EventDetailHeader';
-import { Jumbotron } from '@/components/Jumbotron';
+import { LayoutCardCart } from '@/app/event-detail/components/LayoutCardCart';
+import { CardEvent } from '@/app/home/components/CardEvent';
+import { Category } from '@/app/home/components/Category';
+import { EventCarousel } from '@/app/home/components/EventCarousel';
+import { EventDescription } from '@/app/event-detail/components/EventDescription';
+import { EventDetailHeader } from '@/app/event-detail/components/EventDetailHeader';
+import { Jumbotron } from '@/app/home/components/Jumbotron';
 import { SearchBar } from '@/components/SearchBar';
 
 const EventDetail = () => {
