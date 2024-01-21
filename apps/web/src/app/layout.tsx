@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
           <Toaster
             duration={1500}
@@ -30,7 +30,7 @@ export default function RootLayout({
             richColors
             position="top-right"
           />
-          <FooterComp />
+          {/* <FooterComp /> */}
         </StoreProvider>
       </body>
     </html>
