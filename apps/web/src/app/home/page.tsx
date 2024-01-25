@@ -6,7 +6,7 @@ import { SearchBar } from '@/components/SearchBar';
 
 const HomePage = () => {
   return (
-    <>
+    <div>
       <section className="w-full">
         <div className="max-h-[600px]">
           <Jumbotron />
@@ -73,7 +73,7 @@ const HomePage = () => {
           <CardEvent />
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

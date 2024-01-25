@@ -6,12 +6,11 @@ export const createUser = async (
   generateReferralNumber: string,
 ) => {
   try {
-    const { email, fullName, password, roleId } = data;
+    const { email, name, password, roleId } = data;
     const result = await prisma.user.create({
       data: {
         email,
-        fullName,
-        username: fullName,
+        name,
         password,
         referral_number: generateReferralNumber,
         roleId,

@@ -8,8 +8,7 @@ const Card = ({ range, revenue, improve }: any) => {
       <div className="flex flex-col gap-[20px]">
         <span>Total Revenue</span>
         <span className="text-[24px] font-[500]">
-          $
-          {new Intl.NumberFormat('id-ID').format(revenue)}
+          ${new Intl.NumberFormat('id-ID').format(revenue)}
         </span>
         <span className="text-[14px] font-[300]">
           <span className="text-[#32cd32]">{improve}% </span>

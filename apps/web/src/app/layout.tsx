@@ -22,15 +22,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          {/* <Navbar /> */}
+          <Navbar />
           {children}
           <Toaster
-            duration={1500}
+            duration={1000}
             expand={false}
             richColors
             position="top-right"
           />
-          {/* <FooterComp /> */}
+          <FooterComp />
         </StoreProvider>
       </body>
     </html>

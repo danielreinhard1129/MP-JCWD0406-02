@@ -2,13 +2,14 @@
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import isAuth from '@/components/isAuth';
 
 interface Reward {
   id: number;
   nameReward: string;
   persentase: number;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface UserReward {
@@ -16,8 +17,8 @@ interface UserReward {
   userId: number;
   rewardId: number;
   expiresAt: Date;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
   reward: Reward;
 }
 
@@ -25,16 +26,16 @@ interface Voucher {
   id: number;
   nameVoucher: string;
   persentase: number;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface UserVoucher {
   id: number;
   userId: number;
   voucherId: number;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
   voucher: Voucher;
 }
 
@@ -43,8 +44,13 @@ interface Point_balance {
   point_balance: number;
   userId: number;
   expiresAt: Date;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Role {
+  id: number;
+  role: string;
 }
 
 interface UserData {
@@ -57,9 +63,10 @@ interface UserData {
   address: string;
   point: string;
   referral_number: string;
-  createAt: Date;
-  updateAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
   roleId: number;
+  role: Role;
   userReward: UserReward[];
   point_balance: Point_balance[];
   userVoucher: UserVoucher[];
@@ -112,7 +119,7 @@ const ProfileUser = () => {
               {userData?.email}
             </h5>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              Customer
+              {userData?.role.role}
             </span>
           </div>
         </div>
@@ -137,21 +144,7 @@ const ProfileUser = () => {
                 htmlFor="base-input"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Username
-              </label>
-              <input
-                type="text"
-                value={userData?.username}
-                id="base-input"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="base-input"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Fullname
+                name
               </label>
               <input
                 type="text"
@@ -254,4 +247,4 @@ const ProfileUser = () => {
   );
 };
 
-export default ProfileUser;
+export default isAuth(ProfileUser);
