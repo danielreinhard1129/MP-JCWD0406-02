@@ -194,7 +194,7 @@ const Transaction = () => {
 
   return (
     <>
-      <div className="w-full px-3 h-fit flex justify-center gap-10">
+      <div className="w-full px-3 h-fit md:flex md:justify-center gap-10">
         <div>
           <Card className="px-2 rounded-3xl">
             <h1 className="font-bold text-2xl text-center">Checkout</h1>

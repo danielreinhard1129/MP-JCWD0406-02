@@ -11,7 +11,8 @@ export class EventRouter {
     this.initializeRoutes();
   }
   private initializeRoutes(): void {
-    this.router.get('/', this.eventController.getEvents);
+    this.router.get('/all-events', this.eventController.getEvents);
+    this.router.get('/discovery', this.eventController.getEvents);
     this.router.get('/random-events', this.eventController.getRandomEvents);
     this.router.get(
       '/recently-added',
@@ -25,7 +26,7 @@ export class EventRouter {
       '/filter/location',
       this.eventController.getEventsByLocation,
     );
-    this.router.get('/:id', this.eventController.getEventById);
+    this.router.get('/event-detail/:id', this.eventController.getEventById);
   }
 
   getRouter(): Router {

@@ -1,15 +1,25 @@
 export interface IEvent {
   id: number;
-  event_name: string;
-  category: string;
-  banner: string;
+  title: string;
   description: string;
-  createdAt: Date;
-  dateTime: string;
-  location: string;
-  ticketType: string;
+  locationId: number;
+  startDate: Date;
+  endDate: Date;
   price: number;
-  availableSeat: number;
-  codeVoucher: string;
-  nominalVoucher: number;
+  limit: number;
+  booked: number;
+  thumbnail: string;
+  userId: number;
+  createdAt: Date;
+  updateAt: Date;
+}
+
+export interface IReview {
+  id: number;
+  rating: number;
+  review: string;
+  eventId: number;
+  userId: number;
+  createdat: Date;
+  updateat: Date;
 }

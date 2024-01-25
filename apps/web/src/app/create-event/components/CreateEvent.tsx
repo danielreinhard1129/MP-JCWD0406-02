@@ -45,7 +45,7 @@ const CreateEvent = () => {
           <div className="my-6 md:flex md:justify-between">
             <div className=" items-center md:items-start mb-2">
               <h1 className="text-md font-medium md:text-lg md:font-semibold">
-                Category
+                Categories
               </h1>
               <h5 className="hidden md:block lg:block md:w-52 lg:w-80 text-xs font-thin">
                 Pilih kategori yang sesuai. Jika pemilihan kategori kurang
@@ -108,7 +108,7 @@ const CreateEvent = () => {
                 Description
               </h1>
               <h5 className="hidden md:block lg:block md:w-52 lg:w-80 text-xs font-thin">
-                Jelaskan acaramu sedetail mungkin agar memikat calon penonton
+                Jelaskan acaramu sedetail mungkin agar memikat attendee
               </h5>
             </div>
             <textarea
@@ -155,24 +155,6 @@ const CreateEvent = () => {
             </div>
           </div>
 
-          {/* TIME */}
-          <div className="my-6 md:flex md:justify-between">
-            <div className="items-center md:items-start mb-2">
-              <h1 className="text-md font-medium md:text-lg md:font-semibold">
-                Time
-              </h1>
-              <h5 className="hidden md:block lg:block md:w-52 lg:w-80 text-xs font-thin">
-                Gunakan format 24 jam (hh-mm)
-              </h5>
-            </div>
-            <TextInput
-              id="base"
-              type="text"
-              sizing="md"
-              className="w-full max-w-sm md:w-full md:max-w-2xl lg:w-full lg:max-w-3xl  "
-            />
-          </div>
-
           {/* LOCATION */}
           <div className="my-6 md:flex md:justify-between">
             <div className="items-center md:items-start mb-2 ">
@@ -186,25 +168,6 @@ const CreateEvent = () => {
             </div>
             <TextInput
               placeholder="Batam"
-              id="base"
-              type="text"
-              sizing="md"
-              className="w-full max-w-sm md:w-full md:max-w-2xl lg:w-full lg:max-w-3xl  "
-            />
-          </div>
-
-          {/* Ticket Type */}
-          <div className="my-6 md:flex md:justify-between">
-            <div className="items-center md:items-start mb-2 ">
-              <h1 className="text-md font-medium md:text-lg md:font-semibold">
-                Ticket Type
-              </h1>
-              <h5 className="hidden md:block lg:block md:w-52 lg:w-80 text-xs font-thin">
-                Masukkan Tipe Tiket yang disediakan untuk diiklankan
-              </h5>
-            </div>
-            <TextInput
-              placeholder="VIP Standing"
               id="base"
               type="text"
               sizing="md"
@@ -256,7 +219,7 @@ const CreateEvent = () => {
           <div className="my-6 md:flex md:justify-between">
             <div className=" items-center md:items-start mb-2">
               <h1 className="text-md font-medium md:text-lg md:font-semibold">
-                Code V
+                Code Voucher
               </h1>
               <h5 className="hidden md:block lg:block md:w-52 lg:w-80 text-xs font-thin">
                 Buat promosi untuk eventmu, masukkan Referal Code untuk dapat
@@ -272,7 +235,7 @@ const CreateEvent = () => {
           </div>
           {/* PERSENTASE DISKON */}
 
-          <div className="my-6 md:flex md:justify-between">
+          <div className="my-6 md:flex md:justify-start">
             <div className=" items-center md:items-start mb-2">
               <h1 className="text-md font-medium md:text-lg md:font-semibold">
                 Discount
@@ -282,12 +245,16 @@ const CreateEvent = () => {
                 memotong harga total dari penjualan pertransaksi
               </h5>
             </div>
-            <TextInput
-              id="base"
-              type="text"
-              sizing="md"
-              className="w-full max-w-sm md:w-full md:max-w-2xl lg:w-[200px] lg:max-w-3xl  "
-            />
+            <div className="flex justify-start items-center">
+              <TextInput
+                placeholder="10"
+                id="base"
+                type="text"
+                sizing="md"
+                className="w-[70px] md:w-[70px] lg:w-[70px] lg:pl-4  "
+              />
+              <h1 className="items-center ml-2">%</h1>
+            </div>
           </div>
         </div>
         <div>

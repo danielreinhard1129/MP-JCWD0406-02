@@ -4,7 +4,7 @@ export const getEventsByLocation = async (location: string) => {
   try {
     const result = await prisma.event.findMany({
       where: {
-        location,
+        // location,
       },
       include: {
         user: true,

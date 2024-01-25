@@ -1,8 +1,8 @@
 import { getAllEvents } from '@/repositories/events/getAllEvents';
 
-export const getAllEventsAction = async () => {
+export const getAllEventsAction = async (page: number, pageSize: number) => {
   try {
-    const result = await getAllEvents();
+    const result = await getAllEvents(page, pageSize);
 
     return {
       status: 200,

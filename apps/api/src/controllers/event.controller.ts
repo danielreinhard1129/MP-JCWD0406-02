@@ -9,7 +9,9 @@ import { NextFunction, Request, Response } from 'express';
 export class EventController {
   async getEvents(req: Request, res: Response, next: NextFunction) {
     try {
-      const getAllEvents = await getAllEventsAction();
+      const page = Number((req.query.page as string) || 1);
+      const pageSize = Number((req.query.pageSize as string) || 4);
+      const getAllEvents = await getAllEventsAction(page, pageSize);
 
       res.status(getAllEvents.status).send(getAllEvents);
     } catch (error) {

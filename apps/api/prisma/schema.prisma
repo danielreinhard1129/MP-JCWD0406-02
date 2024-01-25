@@ -12,14 +12,15 @@ datasource db {
 
 model User {
   id              Int            @id @default(autoincrement())
-  fullName        String
+  name            String
   password        String
   email           String         @unique
+  isActive        Boolean        @default(true)
   profile_picture String?
   contact         Int?
   address         String?
   referral_number String         @unique
-  updateAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now())
   createdAt       DateTime       @updatedAt
   roleId          Int
   role            Role           @relation(fields: [roleId], references: [id])
@@ -27,6 +28,8 @@ model User {
   userReward      UserReward[]
   userVoucher     UserVoucher[]
   event           Event[]
+  review          Review[]
+  transaction     Transaction[]
 }
 
 model Role {
@@ -40,8 +43,8 @@ model PointBalance {
   point_balance Int      @default(0)
   userId        Int
   expiresAt     DateTime
-  createAt      DateTime @default(now())
-  updateAt      DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   user          User     @relation(fields: [userId], references: [id])
 }
 
@@ -50,8 +53,8 @@ model UserReward {
   userId    Int
   rewardId  Int
   expiresAt DateTime
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   reward    Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
 }
@@ -60,8 +63,8 @@ model Reward {
   id         Int          @id @default(autoincrement())
   nameReward String
   persentase Int
-  createAt   DateTime     @default(now())
-  updateAt   DateTime     @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   userReward UserReward[]
 }
 
@@ -70,8 +73,8 @@ model UserVoucher {
   userId    Int
   voucherId Int
   isUse     Boolean  @default(false)
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   voucher   Voucher  @relation(fields: [voucherId], references: [id], onDelete: Cascade)
 }
@@ -81,40 +84,104 @@ model Voucher {
   nameVoucher String
   persentase  Int
   expiresAt   DateTime
-  createAt    DateTime      @default(now())
-  updateAt    DateTime      @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   userVoucher UserVoucher[]
 }
 
 model Event {
-  id             Int             @id @default(autoincrement())
-  event_name     String
-  price          Int
-  dateTime       DateTime
-  createdAt      DateTime        @default(now())
-  updateAt       DateTime        @updatedAt
-  location       String
+  id             Int              @id @default(autoincrement())
+  title          String           @unique
   description    String
-  avaibleSeat    Int
-  banner         String
-  category       String
+  locationId     Int
+  startDate      DateTime
+  endDate        DateTime
+  price          Int
+  limit          Int
+  booked         Int
+  thumbnail      String
   userId         Int
-  user           User            @relation(fields: [userId], references: [id])
-  ticket_type    TypeTicket[]
-  event_category EventCategory[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  user           User             @relation(fields: [userId], references: [id])
+  location       Location         @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  diskon         Diskon[]
+  event_category Event_category[]
+  review         Review[]
+  transaction    Transaction[]
 }
 
-model TypeTicket {
-  id         Int    @id @default(autoincrement())
-  ticketName String
-  price      Int
+model Location {
+  id        Int      @id @unique
+  city      String
+  country   String
+  createdAt DateTime
+  event     Event[]
+}
+
+model Diskon {
+  id         Int      @id @default(autoincrement())
+  percentage Int
+  startDate  DateTime
+  endDate    DateTime
   eventId    Int
-  event      Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  isActive   Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  event      Event    @relation(fields: [eventId], references: [id])
 }
 
-model EventCategory {
-  id              Int   @id @default(autoincrement())
-  type_categoryId Int
-  eventId         Int
-  event           Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+model Event_category {
+  id         Int      @id @default(autoincrement())
+  categoryId Int
+  eventId    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  event      Event    @relation(fields: [eventId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String
+  isDeleted      Boolean
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  event_category Event_category[]
+}
+
+model Review {
+  id       Int      @id @default(autoincrement())
+  rating   Int
+  review   String
+  eventId  Int
+  userId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  event    Event    @relation(fields: [eventId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id           Int      @id @default(autoincrement())
+  uuid         String   @unique
+  userId       Int
+  eventId      Int
+  statusId     Int
+  qty          Int
+  paymentProof String
+  total        Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+  event        Event    @relation(fields: [eventId], references: [id])
+  status       Status   @relation(fields: [statusId], references: [id])
+}
+
+model Status {
+  id          Int           @id @default(autoincrement())
+  title       String
+  createdAt    DateTime      @default(now())
+  transaction Transaction[]
 }

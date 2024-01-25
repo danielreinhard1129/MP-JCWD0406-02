@@ -4,10 +4,11 @@ export const getEventsByCategory = async (category: string) => {
   try {
     const result = await prisma.event.findMany({
       where: {
-        category,
+        // category,
       },
       include: {
         user: true,
+        event_category: true,
       },
     });
 

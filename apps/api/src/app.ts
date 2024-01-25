@@ -10,6 +10,7 @@ import cors from 'cors';
 import { PORT } from './config';
 import { UserRouter } from './routers/user.router';
 import { EventRouter } from './routers/event.router';
+import { ReviewRouter } from './routers/review.router';
 
 export default class App {
   private app: Express;
@@ -53,9 +54,11 @@ export default class App {
   private routes(): void {
     const userRouter = new UserRouter();
     const eventRouter = new EventRouter();
+    const reviewRouter = new ReviewRouter();
 
     this.app.use('/api/users', userRouter.getRouter());
     this.app.use('/api/events', eventRouter.getRouter());
+    this.app.use('/api/reviews', reviewRouter.getRouter());
   }
 
   public start(): void {

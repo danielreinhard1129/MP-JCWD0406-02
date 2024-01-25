@@ -194,7 +194,7 @@ const Transaction = () => {
 
   return (
     <>
-      <div className="w-full px-3 h-fit flex justify-center gap-10">
+      <div className="w-full px-3 h-fit md:flex md:justify-center gap-10">
         <div>
           <Card className="px-2 rounded-3xl">
             <h1 className="font-bold text-2xl text-center">Checkout</h1>
@@ -207,7 +207,7 @@ const Transaction = () => {
                 <hr className=" my-3" />
               </div>
               <div className=" ">
-                <h1 className="font-bold text-2xl py-5">
+                <h1 className="font-bold md:text-2xl text-xl md:py-5 ">
                   Event Kejar Tangkap Pantat Gemoy
                 </h1>
                 <hr className=" my-3" />

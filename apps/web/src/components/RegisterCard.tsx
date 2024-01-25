@@ -15,14 +15,14 @@ const validationSchema = yup.object().shape({
   email: yup
     .string()
     .email('Invalid email address')
-    .required('Username cannot be empety'),
-  fullname: yup.string().required('fullname cannot be empety'),
-  password: yup.string().required('Password cannot be empety').min(6),
-  role: yup.string().required('Selected role cannot be empety'),
+    .required('Username cannot be empty'),
+  personOrCompany: yup.string().required('Name person/company cannot be empty'),
+  password: yup.string().required('Password cannot be empty').min(6),
+  role: yup.string().required('Selected role cannot be empty'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], 'Password must match')
-    .required('Password cannot be empety'),
+    .required('Password cannot be empty'),
 });
 
 const RegisterCard = () => {
@@ -34,7 +34,7 @@ const RegisterCard = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
-      fullname: '',
+      personOrCompany: '',
       password: '',
       confirmPassword: '',
       role: '',
@@ -53,7 +53,7 @@ const RegisterCard = () => {
 
         await axios.post(baseUrl + '/users/register', {
           email: values.email,
-          fullName: values.fullname,
+          name: values.personOrCompany,
           password: values.password,
           roleId: roleId,
           referralCode: inputReferral,
@@ -63,7 +63,6 @@ const RegisterCard = () => {
 
         router.push('/login');
       } catch (error) {
-        console.log('hehehehe', error);
         if (error instanceof AxiosError) {
           const errorMsg = error.response?.data || error.message;
           toast.error(errorMsg);
@@ -142,25 +141,26 @@ const RegisterCard = () => {
               <div className="relative z-0 mb-6 w-full group mt-5">
                 <input
                   type="text"
-                  name="fullname"
-                  id="fullname"
+                  name="personOrCompany"
+                  id="personOrCompany"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.fullname}
+                  value={formik.values.personOrCompany}
                 />
                 <label
-                  htmlFor="fullname"
+                  htmlFor="personOrCompany"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Fullname
+                  Name Person/Company
                 </label>
-                {formik.errors.fullname && formik.touched.fullname && (
-                  <p className="text-sm text-red-600 mt-2">
-                    {formik.errors.fullname}
-                  </p>
-                )}
+                {formik.errors.personOrCompany &&
+                  formik.touched.personOrCompany && (
+                    <p className="text-sm text-red-600 mt-2">
+                      {formik.errors.personOrCompany}
+                    </p>
+                  )}
               </div>
               <div className="relative z-0 mb-6 w-full group mt-5">
                 <input

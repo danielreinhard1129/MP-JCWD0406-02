@@ -8,6 +8,7 @@ export const getEventsByRecentlyAdded = async () => {
       },
       include: {
         user: true,
+        location: true,
       },
     });
 
