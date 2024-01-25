@@ -30,16 +30,32 @@ const Navbar = () => {
           },
         });
 
-        dispacth(loginAction(data.data));
+        const sss = data.data;
+        sss.role = data.data.role.role;
+
+        dispacth(loginAction(sss));
       } catch (error) {
         console.log(error);
       }
     };
     keepLogin();
-  }, []);
+  }, [user]);
 
   return (
     <div className="flex justify-end mr-[54px] py-5 gap-5">
+      {
+        user?.role === 'organizer' && (
+
+            <button
+              type="button"
+              onClick={() => router.push(`/dashboard/`)}
+              className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            >
+              Dashboard
+            </button>
+          ) 
+      }
+
       {user.id ? (
         <>
           <button

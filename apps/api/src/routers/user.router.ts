@@ -28,6 +28,7 @@ export class UserRouter {
     );
     this.router.get(`/profile-user/:id`, this.userController.ProfileUser);
     this.router.post('/claim-reward', this.userController.claimReward);
+    this.router.get('/', this.userController.getAllUser)
   }
 
   getRouter(): Router {

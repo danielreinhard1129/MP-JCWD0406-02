@@ -10,6 +10,7 @@ export class EventRouter {
     this.router = Router();
     this.initializeRoutes();
   }
+
   private initializeRoutes(): void {
     this.router.get('/all-events', this.eventController.getEvents);
     this.router.get('/discovery', this.eventController.getEvents);
@@ -30,6 +31,16 @@ export class EventRouter {
   }
 
   getRouter(): Router {
+
+
+  private initializeRoutes(): void {
+    this.router.get('/', this.eventController.getEvents);
+    this.router.post('/filter/title', this.eventController.getEventByTitle);
+    this.router.post('/filter/userid', this.eventController.getEventById);
+  }
+
+  getRoutes(): Router {
+
     return this.router;
   }
 }
