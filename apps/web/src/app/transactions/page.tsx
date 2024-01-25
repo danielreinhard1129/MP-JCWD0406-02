@@ -1,4 +1,4 @@
-import TransactionCard from '@/components/TransactionCard';
+import TransactionCard from '@/app/transactions/components/TransactionCard';
 import { Card } from 'flowbite-react';
 
 const TransactionPage = () => {

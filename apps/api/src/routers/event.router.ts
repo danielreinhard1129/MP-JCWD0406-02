@@ -12,12 +12,35 @@ export class EventRouter {
   }
 
   private initializeRoutes(): void {
+    this.router.get('/all-events', this.eventController.getEvents);
+    this.router.get('/discovery', this.eventController.getEvents);
+    this.router.get('/random-events', this.eventController.getRandomEvents);
+    this.router.get(
+      '/recently-added',
+      this.eventController.getRecentlyAddedEvents,
+    );
+    this.router.get(
+      '/filter/category',
+      this.eventController.getEventsByCategory,
+    );
+    this.router.get(
+      '/filter/location',
+      this.eventController.getEventsByLocation,
+    );
+    this.router.get('/event-detail/:id', this.eventController.getEventById);
+  }
+
+  getRouter(): Router {
+
+
+  private initializeRoutes(): void {
     this.router.get('/', this.eventController.getEvents);
     this.router.post('/filter/title', this.eventController.getEventByTitle);
     this.router.post('/filter/userid', this.eventController.getEventById);
   }
 
   getRoutes(): Router {
+
     return this.router;
   }
 }
