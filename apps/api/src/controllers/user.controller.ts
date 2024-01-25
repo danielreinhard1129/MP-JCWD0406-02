@@ -7,6 +7,7 @@ import { resetPasswordAction } from '@/actions/user/resetpassword.action';
 import { claimReferralCodeAction } from '@/actions/referral/claimReferralCode.action';
 import { profileUserAction } from '@/actions/user/profileuser.action';
 import { claimRewardAction } from '@/actions/claimReward/claimRewardAction';
+import { getUsersAction } from '@/actions/user/getUsers.action';
 
 export class UserController {
   async registerUser(req: Request, res: Response, next: NextFunction) {
@@ -83,6 +84,15 @@ export class UserController {
       return res.status(result.status).send(result);
     } catch (error) {
       next(error);
+    }
+  }
+
+  async getAllUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await getUsersAction()
+      return res.status(result.status).send(result)
+    } catch (error) {
+      next(error)
     }
   }
 }

@@ -11,7 +11,7 @@ export const createUserReward = async (
         userId: userId,
         rewardId,
         expiresAt: expiredDate,
-      },
+      }, 
     });
     return result;
   } catch (error) {

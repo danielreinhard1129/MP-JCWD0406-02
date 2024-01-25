@@ -1,9 +1,8 @@
 import prisma from '@/prisma';
 
-export const getUserByEmail = async (email: string) => {
+export const getUsers = async () => {
   try {
-    const result = await prisma.user.findUnique({
-      where: { email },
+    const result = await prisma.user.findMany({
       include: {
         role: true,
       },

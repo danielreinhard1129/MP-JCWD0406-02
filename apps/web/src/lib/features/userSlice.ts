@@ -3,16 +3,16 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   id: number;
-  fullName: string;
+  name: string;
+  role: string;
   email: string;
-  roleId: number
 }
 
 const initialState: UserState = {
   id: 0,
-  fullName: '',
+  name: '',
+  role: '',
   email: '',
-  roleId: 0
 };
 
 export const userSlice = createSlice({
@@ -21,13 +21,13 @@ export const userSlice = createSlice({
   reducers: {
     loginAction: (state, action: PayloadAction<UserState>) => {
       state.id = action.payload.id;
-      state.fullName = action.payload.fullName;
+      state.name = action.payload.name;
+      state.role = action.payload.role;
       state.email = action.payload.email;
-      state.roleId = action.payload.roleId
     },
     logoutAction: (state) => {
       state.id = 0;
-      state.fullName = '';
+      (state.name = ''), (state.role = '');
       state.email = '';
     },
   },
