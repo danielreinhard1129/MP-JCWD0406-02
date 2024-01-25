@@ -44,7 +44,7 @@ const PaginationFix: React.FC = () => {
         const response = await axios.get<{
           data: IEvent[];
           totalPages: number;
-        }>(`${baseUrl}/events/discovery?page=${page}&pageSize=${pageSize}`);
+        }>(`${baseUrl}/events/all-events`);
         setEvents(response.data.data);
         setTotalPages(response.data.totalPages);
       } catch (error) {
